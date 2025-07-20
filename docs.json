@@ -127,7 +127,9 @@
           "200": {
             "description": "Returns true if updated successfully",
             "content": {
-              "application/json": { "schema": { "type": "boolean" } }
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SuccessResponseType" }
+              }
             }
           },
           "400": {
@@ -157,7 +159,9 @@
           "200": {
             "description": "Returns true if deleted successfully",
             "content": {
-              "application/json": { "schema": { "type": "boolean" } }
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SuccessResponseType" }
+              }
             }
           },
           "400": {
@@ -252,6 +256,11 @@
           "priority": { "type": "number" }
         },
         "required": ["name", "description", "type", "priority"]
+      },
+      "SuccessResponseType": {
+        "type": "object",
+        "properties": { "success": { "type": "boolean" } },
+        "required": ["success"]
       }
     }
   }
