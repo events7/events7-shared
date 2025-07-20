@@ -23,10 +23,30 @@
         },
         "responses": {
           "201": {
-            "description": "",
+            "description": "Event created successfully. Returns the created event",
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/Event" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Usually triggered if the request body or provided parameter is not valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponseType"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden resource. Try again later or check with adminstrators that you have correct permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenResponseType"
+                }
               }
             }
           }
@@ -65,10 +85,20 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "Event found. Returns the event",
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/Event" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Usually triggered if the request body or provided parameter is not valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponseType"
+                }
               }
             }
           }
@@ -95,11 +125,17 @@
         },
         "responses": {
           "200": {
-            "description": "",
+            "description": "Returns true if updated successfully",
+            "content": {
+              "application/json": { "schema": { "type": "boolean" } }
+            }
+          },
+          "400": {
+            "description": "Bad request. Usually triggered if the request body or provided parameter is not valid",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UpdateResultExtended"
+                  "$ref": "#/components/schemas/BadRequestResponseType"
                 }
               }
             }
@@ -119,11 +155,17 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "Returns true if deleted successfully",
+            "content": {
+              "application/json": { "schema": { "type": "boolean" } }
+            }
+          },
+          "400": {
+            "description": "Bad request. Usually triggered if the request body or provided parameter is not valid",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeleteResultExtended"
+                  "$ref": "#/components/schemas/BadRequestResponseType"
                 }
               }
             }
@@ -180,6 +222,24 @@
           "updatedAt"
         ]
       },
+      "BadRequestResponseType": {
+        "type": "object",
+        "properties": {
+          "statusCode": { "type": "number" },
+          "message": { "type": "array", "items": { "type": "string" } },
+          "error": { "type": "string" }
+        },
+        "required": ["statusCode", "message", "error"]
+      },
+      "ForbiddenResponseType": {
+        "type": "object",
+        "properties": {
+          "statusCode": { "type": "number" },
+          "message": { "type": "string" },
+          "error": { "type": "string" }
+        },
+        "required": ["statusCode", "message", "error"]
+      },
       "UpdateEventDto": {
         "type": "object",
         "properties": {
@@ -192,23 +252,6 @@
           "priority": { "type": "number" }
         },
         "required": ["name", "description", "type", "priority"]
-      },
-      "UpdateResultExtended": {
-        "type": "object",
-        "properties": {
-          "affected": { "type": "number" },
-          "raw": { "type": "object" },
-          "generatedMaps": { "type": "array", "items": { "type": "string" } }
-        },
-        "required": ["affected", "raw", "generatedMaps"]
-      },
-      "DeleteResultExtended": {
-        "type": "object",
-        "properties": {
-          "affected": { "type": "number" },
-          "raw": { "type": "object" }
-        },
-        "required": ["affected", "raw"]
       }
     }
   }
