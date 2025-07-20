@@ -1,0 +1,215 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/v1/api": {
+      "get": {
+        "operationId": "AppController_getHello_v1",
+        "parameters": [],
+        "responses": { "200": { "description": "" } },
+        "tags": ["App"]
+      }
+    },
+    "/v1/api/events": {
+      "post": {
+        "operationId": "EventsController_create_v1",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateEventDto" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Event" }
+              }
+            }
+          }
+        },
+        "tags": ["Events"]
+      },
+      "get": {
+        "operationId": "EventsController_findAll_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Event" }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Events"]
+      }
+    },
+    "/v1/api/events/{id}": {
+      "get": {
+        "operationId": "EventsController_findOne_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Event" }
+              }
+            }
+          }
+        },
+        "tags": ["Events"]
+      },
+      "patch": {
+        "operationId": "EventsController_update_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateEventDto" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateResultExtended"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Events"]
+      },
+      "delete": {
+        "operationId": "EventsController_remove_v1",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteResultExtended"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Events"]
+      }
+    }
+  },
+  "info": {
+    "title": "Events7 API",
+    "description": "Event tracker for Outfit7 technical assessment",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CreateEventDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["crosspromo", "liveops", "app", "ads"]
+          },
+          "priority": { "type": "number" }
+        },
+        "required": ["name", "description", "type", "priority"]
+      },
+      "Event": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["crosspromo", "liveops", "app", "ads"]
+          },
+          "priority": { "type": "number" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "type",
+          "priority",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "UpdateEventDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["crosspromo", "liveops", "app", "ads"]
+          },
+          "priority": { "type": "number" }
+        },
+        "required": ["name", "description", "type", "priority"]
+      },
+      "UpdateResultExtended": {
+        "type": "object",
+        "properties": {
+          "affected": { "type": "number" },
+          "raw": { "type": "object" },
+          "generatedMaps": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["affected", "raw", "generatedMaps"]
+      },
+      "DeleteResultExtended": {
+        "type": "object",
+        "properties": {
+          "affected": { "type": "number" },
+          "raw": { "type": "object" }
+        },
+        "required": ["affected", "raw"]
+      }
+    }
+  }
+}
