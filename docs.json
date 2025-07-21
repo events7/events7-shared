@@ -259,8 +259,11 @@
       },
       "SuccessResponseType": {
         "type": "object",
-        "properties": { "success": { "type": "boolean" } },
-        "required": ["success"]
+        "properties": {
+          "success": { "type": "boolean" },
+          "message": { "type": "string" }
+        },
+        "required": ["success", "message"]
       }
     }
   }
