@@ -23,10 +23,12 @@
         },
         "responses": {
           "201": {
-            "description": "Event created successfully. Returns the created event",
+            "description": "Event created successfully.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Event" }
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponseTypeEventPost"
+                }
               }
             }
           },
@@ -85,10 +87,12 @@
         ],
         "responses": {
           "200": {
-            "description": "Event found. Returns the event",
+            "description": "Returns the event if found or null if not found",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Event" }
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponseTypeEventGetOne"
+                }
               }
             }
           },
@@ -125,10 +129,12 @@
         },
         "responses": {
           "200": {
-            "description": "Returns true if updated successfully",
+            "description": "Updates an event.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/SuccessResponseType" }
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponseTypeEventPatch"
+                }
               }
             }
           },
@@ -160,7 +166,9 @@
             "description": "Returns true if deleted successfully",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/SuccessResponseType" }
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponseTypeEventDelete"
+                }
               }
             }
           },
@@ -226,14 +234,36 @@
           "updatedAt"
         ]
       },
+      "SuccessResponseTypeEventPost": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "message": { "type": "string" },
+          "data": { "$ref": "#/components/schemas/Event" }
+        },
+        "required": ["success", "message", "data"]
+      },
+      "BadRequestResponseTypeError": {
+        "type": "object",
+        "properties": {
+          "field": { "type": "string" },
+          "errors": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["field", "errors"]
+      },
       "BadRequestResponseType": {
         "type": "object",
         "properties": {
-          "statusCode": { "type": "number" },
-          "message": { "type": "array", "items": { "type": "string" } },
-          "error": { "type": "string" }
+          "statusCode": { "type": "number", "default": 400 },
+          "message": { "type": "string" },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BadRequestResponseTypeError"
+            }
+          }
         },
-        "required": ["statusCode", "message", "error"]
+        "required": ["statusCode", "message", "errors"]
       },
       "ForbiddenResponseType": {
         "type": "object",
@@ -243,6 +273,18 @@
           "error": { "type": "string" }
         },
         "required": ["statusCode", "message", "error"]
+      },
+      "SuccessResponseTypeEventGetOne": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "message": { "type": "string" },
+          "data": {
+            "nullable": true,
+            "allOf": [{ "$ref": "#/components/schemas/Event" }]
+          }
+        },
+        "required": ["success", "message", "data"]
       },
       "UpdateEventDto": {
         "type": "object",
@@ -257,7 +299,16 @@
         },
         "required": ["name", "description", "type", "priority"]
       },
-      "SuccessResponseType": {
+      "SuccessResponseTypeEventPatch": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "message": { "type": "string" },
+          "data": { "$ref": "#/components/schemas/Event" }
+        },
+        "required": ["success", "message", "data"]
+      },
+      "SuccessResponseTypeEventDelete": {
         "type": "object",
         "properties": {
           "success": { "type": "boolean" },
