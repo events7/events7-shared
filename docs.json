@@ -147,6 +147,16 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Entry not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundExceptionType"
+                }
+              }
+            }
           }
         },
         "tags": ["Events"]
@@ -178,6 +188,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/BadRequestResponseType"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entry not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundExceptionType"
                 }
               }
             }
@@ -307,6 +327,14 @@
           "data": { "$ref": "#/components/schemas/Event" }
         },
         "required": ["success", "message", "data"]
+      },
+      "NotFoundExceptionType": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string", "default": "Entry not found" },
+          "statusCode": { "type": "number", "default": 404 }
+        },
+        "required": ["message", "statusCode"]
       },
       "SuccessResponseTypeEventDelete": {
         "type": "object",
