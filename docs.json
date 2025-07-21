@@ -220,6 +220,7 @@
       "CreateEventDto": {
         "type": "object",
         "properties": {
+          "identification": { "type": "string" },
           "name": { "type": "string" },
           "description": { "type": "string" },
           "type": {
@@ -228,12 +229,19 @@
           },
           "priority": { "type": "number" }
         },
-        "required": ["name", "description", "type", "priority"]
+        "required": [
+          "identification",
+          "name",
+          "description",
+          "type",
+          "priority"
+        ]
       },
       "Event": {
         "type": "object",
         "properties": {
           "id": { "type": "string" },
+          "identification": { "type": "string" },
           "name": { "type": "string" },
           "description": { "type": "string" },
           "type": {
@@ -246,6 +254,7 @@
         },
         "required": [
           "id",
+          "identification",
           "name",
           "description",
           "type",
@@ -309,6 +318,7 @@
       "UpdateEventDto": {
         "type": "object",
         "properties": {
+          "identification": { "type": "string" },
           "name": { "type": "string" },
           "description": { "type": "string" },
           "type": {
@@ -317,7 +327,13 @@
           },
           "priority": { "type": "number" }
         },
-        "required": ["name", "description", "type", "priority"]
+        "required": [
+          "identification",
+          "name",
+          "description",
+          "type",
+          "priority"
+        ]
       },
       "SuccessResponseTypeEventPatch": {
         "type": "object",
